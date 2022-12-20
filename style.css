@@ -77,6 +77,11 @@ form * {
 
 .movie-container {
     display: flex;
+    padding: 0.5rem 0;
+}
+
+.movie-container:not(:last-child) {
+    border-bottom: 1px solid #DFDDDD;
 }
 
 .movie-poster {
@@ -87,6 +92,7 @@ form * {
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 0.1rem;
 }
 
