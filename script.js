@@ -3,9 +3,10 @@ const API_KEY = "91724c4e"
 const searchInput = document.querySelector('.search-input')
 const form = document.querySelector('form')
 const movieList = document.getElementById('movie-list')
+let recievedMovieList
 
 const API_URL = `http://www.omdbapi.com/?apikey=${API_KEY}&`
-const watchList = localStorage.getItem('watchList') || [];
+const watchList = JSON.parse(localStorage.getItem('watchList')) || {};
 
 form.addEventListener('submit', handleMovieSearch)
 
@@ -14,6 +15,8 @@ async function handleMovieSearch(event) {
     const movieTitle = searchInput.value
     const resp = await fetch(`${API_URL}s=${movieTitle}&plot=short`)
     const data = await resp.json()
+    recievedMovieList = data.Search
+    
     renderMoviesTemplate(data.Search)
     renderMoviesInfo(data.Search)
 }
@@ -37,6 +40,7 @@ async function getMovieInfo(movie) {
 function getMovieInfoHtml(movieObject) {
     const {Title: title, Genre: genre, Year: year , imdbID} = movieObject
     const {Runtime: duration, imdbRating, Plot: plot} = movieObject
+    const watchListClass = imdbID in watchList ? 'remove' : 'add'
     return `<div class="movie-title">${title}</div>
             <div class="movie-genres">${genre}</div>
             <div class="year-duration-rating">
@@ -48,7 +52,7 @@ function getMovieInfoHtml(movieObject) {
                 </div>
             </div>
             <div class="movie-description">${plot}</div>
-            <button class="watchlist add" data-imdbID="${imdbID}">Watchlist</button>`
+            <button class="watchlist ${watchListClass}" id="btn-${imdbID}" data-imdbID="${imdbID}">Watchlist</button>`
 }
 
 function getMovieHtml(movieObject) {
@@ -66,11 +70,25 @@ document.addEventListener('click', handleClick)
 function handleClick(event) {
     const dataSet = event.target.dataset
     if (dataSet.imdbid) {
-        if (watchList.includes(dataSet.imdbid)) {
-            console.log("Duplicate")
+        editWatchlist(dataSet.imdbid)
+}
+
+function editWatchlist(imdbid) {
+    const btn = document.getElementById(`btn-${imdbid}`)
+    if (imdbid in watchList) {
+            delete watchList[imdbid]
+            btn.classList.add('add')
+            btn.classList.remove('remove')
             return
-        }
-        watchList.push(dataSet.imdbid)
-        console.log(watchList)
-    }
+        } else {
+            watchList[imdbid] = recievedMovieList.find(el => el.imdbID === imdbid)
+            btn.classList.remove('add')
+            btn.classList.add('remove')
+        }}
+    console.log(watchList)
+    saveLocalStorage()
+}
+
+function saveLocalStorage() {
+    localStorage.setItem('watchList', JSON.stringify(watchList))
 }

@@ -139,3 +139,7 @@ form * {
     content: url('./add-watchlist.png');
 }
 
+.remove::before {
+    content: url('./remove-watchlist.png');
+}
+
