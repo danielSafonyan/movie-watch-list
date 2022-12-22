@@ -6,6 +6,7 @@
 
 body {
     margin: 0;
+    font-family: 'Inter', sans-serif;
 }
 
 #root {
@@ -114,12 +115,14 @@ form * {
 }
 
 .movie-duration,
+.movie-year,
 .movie-genres {
     font-size: 0.8rem;
 }
 
 .movie-description {
-    font-size: 0.9rem;
+    margin: 0.2rem 0;
+    font-size: 0.8rem;
     color: grey;
 }
 
@@ -128,4 +131,7 @@ form * {
     /* justify-content: center; */
     align-items: center;
     gap: 0.2rem;
+    font-size: 0.8rem;
+    cursor: pointer;
 }
+
