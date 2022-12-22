@@ -121,12 +121,21 @@ form * {
     color: grey;
 }
 
-.add-watchlist {
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    gap: 0.2rem;
+.watchlist {
+    border: none;
+    background-color: transparent;
+    padding: 0.5em;
+    padding-left: 0;
     font-size: 0.8rem;
     cursor: pointer;
+    max-width: 100px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.add::before {
+    content: url('./add-watchlist.png');
 }
 
