@@ -17,8 +17,13 @@ async function handleMovieSearch(event) {
     const data = await resp.json()
     recievedMovieList = data.Search
     
-    renderMoviesTemplate(data.Search)
-    renderMoviesInfo(data.Search)
+    if (data.Search) {
+        renderMoviesTemplate(data.Search)
+        renderMoviesInfo(data.Search)
+    } else {
+        movieList.innerHTML = `<div class="start-exploring">Are you sure there is such a movie?</div>`
+    }
+    
 }
 
 function renderMoviesTemplate(moviesArray) {
@@ -41,6 +46,7 @@ function getMovieInfoHtml(movieObject) {
     const {Title: title, Genre: genre, Year: year , imdbID} = movieObject
     const {Runtime: duration, imdbRating, Plot: plot} = movieObject
     const watchListClass = imdbID in watchList ? 'remove' : 'add'
+    const watchListText = imdbID in watchList ? 'Remove' : 'Watchlist'
     return `<div class="movie-title">${title}</div>
             <div class="movie-genres">${genre}</div>
             <div class="year-duration-rating">
@@ -52,7 +58,7 @@ function getMovieInfoHtml(movieObject) {
                 </div>
             </div>
             <div class="movie-description">${plot}</div>
-            <button class="watchlist ${watchListClass}" id="btn-${imdbID}" data-imdbID="${imdbID}">Watchlist</button>`
+            <button class="watchlist ${watchListClass}" id="btn-${imdbID}" data-imdbID="${imdbID}">${watchListText}</button>`
 }
 
 function getMovieHtml(movieObject) {
@@ -79,13 +85,14 @@ function editWatchlist(imdbid) {
             delete watchList[imdbid]
             btn.classList.add('add')
             btn.classList.remove('remove')
+            btn.textContent = 'Watchlist'
             return
         } else {
             watchList[imdbid] = recievedMovieList.find(el => el.imdbID === imdbid)
             btn.classList.remove('add')
             btn.classList.add('remove')
+            btn.textContent = 'Remove'
         }}
-    console.log(watchList)
     saveLocalStorage()
 }
 
