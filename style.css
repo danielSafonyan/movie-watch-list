@@ -62,13 +62,13 @@ form * {
 #movie-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
 }
 
 .start-exploring {
     display: none;
     text-align: center;
+    align-self: center;
 }
 
 .start-exploring-text {
@@ -87,6 +87,7 @@ form * {
 
 .movie-poster {
     align-self: center;
+    max-width: 8rem;
 }
 
 .movie-info {
@@ -97,14 +98,8 @@ form * {
     gap: 0.1rem;
 }
 
-.title-row-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .movie-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
 }
 
@@ -114,10 +109,10 @@ form * {
     gap: 0.2em;
 }
 
-.movie-duration,
-.movie-year,
-.movie-genres {
+.year-duration-rating {
     font-size: 0.8rem;
+    display: flex;
+    gap: 1rem;
 }
 
 .movie-description {
