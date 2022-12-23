@@ -40,7 +40,6 @@ async function renderMoviesInfo(moviesArray) {
 }
 
 async function getMovieInfo(imdbID) {
-    console.log(imdbID)
     const resp = await fetch(`${API_URL}i=${imdbID}`)
     const data = await resp.json()
     return data
