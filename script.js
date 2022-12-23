@@ -33,13 +33,17 @@ function renderMoviesTemplate(moviesArray) {
 }
 
 async function renderMoviesInfo(moviesArray) {
-    moviesArray.forEach(el => getMovieInfo(el))
+    moviesArray.forEach(async el => {
+        const movieData = await getMovieInfo(el.imdbID)
+        document.getElementById(`info-${el.imdbID}`).innerHTML = getMovieInfoHtml(movieData)
+    })
 }
 
-async function getMovieInfo(movie) {
-    const resp = await fetch(`${API_URL}i=${movie.imdbID}`)
+async function getMovieInfo(imdbID) {
+    console.log(imdbID)
+    const resp = await fetch(`${API_URL}i=${imdbID}`)
     const data = await resp.json()
-    document.getElementById(`info-${movie.imdbID}`).innerHTML = getMovieInfoHtml(data)
+    return data
 }
 
 function getMovieInfoHtml(movieObject) {
@@ -73,13 +77,13 @@ function getMovieHtml(movieObject) {
 
 document.addEventListener('click', handleClick)
 
-function handleClick(event) {
+async function handleClick(event) {
     const dataSet = event.target.dataset
     if (dataSet.imdbid) {
-        editWatchlist(dataSet.imdbid)
+       await editWatchlist(dataSet.imdbid)
 }
 
-function editWatchlist(imdbid) {
+async function editWatchlist(imdbid) {
     const btn = document.getElementById(`btn-${imdbid}`)
     if (imdbid in watchList) {
             delete watchList[imdbid]
@@ -88,7 +92,7 @@ function editWatchlist(imdbid) {
             btn.textContent = 'Watchlist'
             return
         } else {
-            watchList[imdbid] = recievedMovieList.find(el => el.imdbID === imdbid)
+            watchList[imdbid] = await getMovieInfo(imdbid)
             btn.classList.remove('add')
             btn.classList.add('remove')
             btn.textContent = 'Remove'
