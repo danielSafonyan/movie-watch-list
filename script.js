@@ -5,7 +5,7 @@ const form = document.querySelector('form')
 const movieList = document.getElementById('movie-list')
 let recievedMovieList
 
-const API_URL = `http://www.omdbapi.com/?apikey=${API_KEY}&`
+const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}&`
 const watchList = JSON.parse(localStorage.getItem('watchList')) || {};
 
 form.addEventListener('submit', handleMovieSearch)
