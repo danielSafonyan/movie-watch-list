@@ -12,7 +12,7 @@ form.addEventListener('submit', handleMovieSearch)
 
 async function handleMovieSearch(event) {
     event.preventDefault()
-    const movieTitle = searchInput.value
+    const movieTitle = searchInput.value.trim()
     const resp = await fetch(`${API_URL}s=${movieTitle}&plot=short`)
     const data = await resp.json()
     recievedMovieList = data.Search
@@ -40,6 +40,7 @@ async function renderMoviesInfo(moviesArray) {
 }
 
 async function getMovieInfo(imdbID) {
+    console.log(`${API_URL}i=${imdbID}`)
     const resp = await fetch(`${API_URL}i=${imdbID}`)
     const data = await resp.json()
     return data
