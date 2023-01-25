@@ -4,6 +4,7 @@ import SearchForm from '../components/SearchForm'
 import MovieList from '../components/MovieList'
 
 export default function Search() {
+    const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem('movies')) || {})
     const [inputMove, setInputMovie] = React.useState('')
     const [fetchedMovies, setFetchedMovies] = React.useState(null)
     return (
@@ -14,7 +15,11 @@ export default function Search() {
                 setInputMovie={setInputMovie}
                 setFetchedMovies={setFetchedMovies}
             />
-            <MovieList fetchedMovies={fetchedMovies}/>
+            <MovieList 
+            fetchedMovies={fetchedMovies}
+            savedMovies={savedMovies}
+            setSavedMovies={setSavedMovies}
+            />
         </>
         )
 }

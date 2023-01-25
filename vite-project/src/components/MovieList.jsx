@@ -4,6 +4,7 @@ import StartExploringPlaceholder from './StartExploringPlaceholder'
 import Movie from './Movie'
 
 export default function MovieList(props) {
+    console.log(props)
     let message
     try {
         message = props.fetchedMovies.Error
@@ -14,7 +15,7 @@ export default function MovieList(props) {
     let movieElems
 
     try {
-        movieElems = props.fetchedMovies.Search.map(el => <Movie {...el} key={el.imdbID} />)
+        movieElems = props.fetchedMovies.Search.map(el => <Movie {...el} key={el.imdbID} inWatchlist={el.imdbID in props.savedMovies} savedMovies={props.savedMovies} setSavedMovies={props.setSavedMovies}/>)
     } catch {
         movieElems = null
     }

@@ -134,7 +134,6 @@ form * {
   padding-left: 0;
   font-size: 0.8rem;
   cursor: pointer;
-  max-width: 100px;
 
   display: flex;
   align-items: center;
