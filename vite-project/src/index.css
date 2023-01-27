@@ -67,7 +67,6 @@ form * {
 #movie-list {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .start-exploring {
@@ -105,14 +104,14 @@ form * {
   font-weight: bold;
 }
 
-.movie-rating {
-  display: flex;
-  align-items: baseline;
-  gap: 0.2em;
-}
+
 
 .fa-star {
   color: gold;
+}
+
+.rating {
+  font-size: 0.8rem;
 }
 
 .year-duration-rating {
@@ -130,9 +129,7 @@ form * {
 .watchlist {
   border: none;
   background-color: transparent;
-  padding: 0.5em;
-  padding-left: 0;
-  font-size: 0.8rem;
+  padding-left: 2px;
   cursor: pointer;
 
   display: flex;
