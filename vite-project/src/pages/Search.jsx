@@ -1,25 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import MovieContext from '../MovieContext'
 import Header from '../components/Header'
 import Movie from '../components/Movie'
 import StartExploringPlaceholder from '../components/StartExploringPlaceholder'
 import { getSearchApiUrl } from '../utils'
 
-
-// https://image.tmdb.org/t/p/original/kjFDIlUCJkcpFxYKtE6OsGcAfQQ.jpg
-// API KEY = 5dcf7f28a88be0edc01bbbde06f024ab
-// 
-
 export default function Search() {
-    const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem('movies')) || {})
     const [inputMove, setInputMovie] = React.useState('')
     const [fetchedMovies, setFetchedMovies] = React.useState(null)
     const [placeHolder, setPlaceHolder] = React.useState({
         isShown: true,
         message: `Let's add some movies!`
     })
-
-    console.log(fetchedMovies)
-
+    
     async function handleFormSubmit(e) {
         e.preventDefault()
         console.log("Lookng for", inputMove)
@@ -31,6 +24,7 @@ export default function Search() {
         } 
         else {
             setPlaceHolder({isShown: true, message: `We couldn't find ${inputMove} 😔`})
+            setFetchedMovies(null)
         }
     }
     return (

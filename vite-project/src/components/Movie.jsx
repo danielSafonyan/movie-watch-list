@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import MovieContext from '../MovieContext'
 import { getMoviePosterUrl } from '../utils'
 
 export default function(props) {
-    console.log(props)
-    const { title, overview, poster_path, release_date, vote_count, vote_average, } = props
-    const inWatchlist = true
-    const inWatchlistElem = inWatchlist ? <i class="fa-solid fa-bookmark"></i> : <i class="fa-regular fa-bookmark"></i>
+    const { savedMovies, handleMovieClick } = useContext(MovieContext)
+    const { title, overview, poster_path, release_date, vote_count, vote_average, id } = props
+    const inWatchlist = id in savedMovies
+    const inWatchlistElem = inWatchlist ? <i class="fa-solid fa-bookmark"></i> : <i className="fa-regular fa-bookmark"></i>
+
+
     return (
-         <div className="movie-container" data-movie={JSON.stringify(props)}>
+         <div className="movie-container">
             <img className="movie-poster" src={getMoviePosterUrl(poster_path)} />
             <div className="movie-info">
                  <div className="movie-title">{title}</div>
@@ -18,7 +21,7 @@ export default function(props) {
                     <i className="fa-regular fa-eye"></i> {vote_count}
                     </div>
                  
-                 <button className="watchlist" onClick={() => console.log("Adding to favorite!")}>{inWatchlistElem}</button>
+                 <button className="watchlist" onClick={() => handleMovieClick(props)}>{inWatchlistElem}</button>
              </div>
          </div>
 )
